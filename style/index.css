@@ -1,0 +1,13 @@
+.header_top {
+    width: 100%;
+    max-width: 1280px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    background-color: red;
+}
+
+.div_logo {
+    font-family: "Heebo", "Helvetica Neue", "Arial", "sans-serif";
+
+}
