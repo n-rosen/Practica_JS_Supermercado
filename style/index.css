@@ -10,6 +10,12 @@
     border-bottom: 1px solid white;
 }
 
+.shopify-section {
+    max-width: 75%;
+    position: relative;
+    left: 12.5%;
+}
+
 .div_logo {
     font-family: "Heebo", "Helvetica Neue", "Arial", "sans-serif";
     margin-right: 50px;
