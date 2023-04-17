@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <script src="js/index.js"></script>
+
     <link rel="stylesheet" href="style/index.css">
 
 </head>
@@ -41,7 +41,14 @@
                 <button type="button" class="btn btn-light">Buscar</button>
             </div>
             <div class="div_cuenta">
-
+                <div>
+                    <label for="nombreusuario" class="form-label text-light">Iniciar Sesión:</label>
+                    <br>
+                    <input type="text" id="nombreusuario" placeholder="Nombre usuario">
+                    <input type="password" id="contraseña" placeholder="Contraseña">
+                    <button type="button" id="login" class="btn btn-light">Iniciar Sesion</button>
+                    <button type="button" id="registrarse" class="btn btn-light">Registrarse</button>
+                </div>
             </div>
         </div>
     </header>
@@ -49,9 +56,9 @@
         <nav>
             <ul id="menu_navegacion">
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="/">Informacion</a></li>
-                <li><a href="login.html">Iniciar Sesion / Registrarse</a></li>
-                <li><a href="/">Ofertas</a></li>
+                <li><a href="#shopify-section-49d01bc5-9987-4d15-a5b1-ed1d0a048049">Informacion</a></li>
+                <!-- <li><a href="login.html">Iniciar Sesion / Registrarse</a></li> -->
+                <li><a href="#titulo_cliente">Ofertas</a></li>
             </ul>
         </nav>
     </div>
@@ -86,6 +93,9 @@
 
         </section>
     </div>
+    <div class="text-center">
+        <h1 id="titulo_cliente">Inicia sesión o registrate para obtener ofertas</h1>
+    </div>
     <div class="container">
         <div class="row">
             <!-- Elementos generados a partir del JSON -->
@@ -102,6 +112,8 @@
             </aside>
         </div>
     </div>
+    <script src="js/carrito.js"></script>
+    <script src=""></script>
 </body>
 
 </html>
