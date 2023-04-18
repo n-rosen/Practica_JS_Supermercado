@@ -42,11 +42,13 @@
             </div>
             <div class="div_cuenta">
                 <div>
-                    <label for="nombreusuario" class="form-label text-light">Iniciar Sesión:</label>
-                    <br>
-                    <input type="text" id="nombreusuario" placeholder="Nombre usuario">
-                    <input type="password" id="contraseña" placeholder="Contraseña">
-                    <button type="button" id="login" class="btn btn-light">Iniciar Sesion</button>
+                    <form>
+                        <label for="nombreusuario" class="form-label text-light">Iniciar Sesión:</label>
+                        <br>
+                        <input type="text" id="nombreusuario" placeholder="Nombre usuario" required>
+                        <input type="password" id="contraseña" placeholder="Contraseña" required>
+                        <button type="button" id="login" class="btn btn-light">Iniciar Sesion</button>
+                    </form>
                     <button type="button" id="registrarse" class="btn btn-light">Registrarse</button>
                 </div>
             </div>
@@ -112,6 +114,12 @@
             </aside>
         </div>
     </div>
+    <footer>
+        <figure>
+            Copyright (C) 2022 Nicolas Rosende Perez
+            All Rights Reserved.
+        </figure>
+    </footer>
     <script src="js/carrito.js"></script>
     <script src=""></script>
 </body>

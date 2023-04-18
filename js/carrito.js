@@ -25,9 +25,79 @@ const baseDeDatos = [
     imagen: "media/producto4.avif",
   },
 ];
-
+class Usuario {
+  id;
+  username;
+  nombre;
+  telefono;
+  tipo;
+  contrasenya;
+  constructor(id, username, nombre, telefono, tipo, contrasenya) {
+    this.id = id;
+    this.username = username;
+    this.nombre = nombre;
+    this.telefono = telefono;
+    this.tipo = tipo;
+    this.contrasenya = contrasenya;
+  }
+  getId() {
+    return this.id;
+  }
+  getUsername() {
+    return this.username;
+  }
+  getNombre() {
+    return this.nombre;
+  }
+  getTelefono() {
+    return this.telefono;
+  }
+  getTipo() {
+    return this.tipo;
+  }
+}
 // Funciones
+//Iniciar sesion
 
+function iniciarSesion() {
+  let username = document.querySelector("#nombreusuario");
+  let contrasenya = document.querySelector("#contraseña");
+
+  if (username == "" || contrasenya == "") {
+    alert("Introduce el nombre de usuario y la contraseña");
+  }
+  usuarios.forEach(element => {
+    if (username == element.getUsername()) {
+      if (contrasenya == element.getContrasenya()) {
+        return true;
+        mostrarOfertas(element.getNombre());
+      } else {
+        alert("Error de login")
+        return false;
+      }
+    } else {
+      alert("Error de login")
+      return false;
+    }
+  });
+}
+
+
+
+
+function mostrarOfertas(nombre) {
+  let mensajeUsuario = document.querySelector("#titulo_cliente");
+  mensajeUsuario.innerHTML = "Bienvenido/a " + nombre;
+}
+
+
+
+
+
+
+
+
+//Carrito
 /**
  * Dibuja todos los productos a partir de la base de datos. No confundir con el carrito
  */
@@ -151,21 +221,33 @@ function calcularTotal() {
  * Varia el carrito y vuelve a dibujarlo
  */
 function vaciarCarrito() {
-  // Limpiamos los productos guardados
-  carrito = [];
+  if (carrito.length > 0) {
+    let confirmar_carrito = confirm("Estás seguro de que quieres vaciar el carrito ????");
+    if (confirmar_carrito) {
+      // Limpiamos los productos guardados
+      carrito = [];
+    }
+  } else {
+    carrito = [];
+  }
   // Renderizamos los cambios
   renderizarCarrito();
 }
 
 // Eventos
+let user1 = new Usuario("1", "nicolasrp", "Nicolas Rosende Perez", "698154142", "2", "abc123.");
+let user2 = new Usuario("2", "danielaft", "Daniela Franco Turchi", "123456789", "1", "abc123.");
+let usuarios = [user1, user2];
 let carrito = [];
 const divisa = "€";
 const DOMitems = document.querySelector("#items");
 const DOMcarrito = document.querySelector("#carrito");
 const DOMtotal = document.querySelector("#total");
 const DOMbotonVaciar = document.querySelector("#boton-vaciar");
+const DOMbotonlogin = document.querySelector("#login");
 console.log(DOMbotonVaciar);
 DOMbotonVaciar.addEventListener("click", vaciarCarrito);
+DOMbotonlogin.addEventListener("click", iniciarSesion);
 // Inicio
 renderizarProductos();
 renderizarCarrito();
