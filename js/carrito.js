@@ -55,31 +55,34 @@ class Usuario {
   getTipo() {
     return this.tipo;
   }
+  getContrasenya() {
+    return this.contrasenya;
+  }
 }
 // Funciones
 //Iniciar sesion
 
 function iniciarSesion() {
-  let username = document.querySelector("#nombreusuario");
-  let contrasenya = document.querySelector("#contraseña");
-
+  let username = document.querySelector("#nombreusuario").value;
+  let contrasenya = document.querySelector("#contraseña").value;
+  let usuarioCorrecto = false;
   if (username == "" || contrasenya == "") {
     alert("Introduce el nombre de usuario y la contraseña");
   }
   usuarios.forEach(element => {
+    console.log(element.getUsername());
     if (username == element.getUsername()) {
       if (contrasenya == element.getContrasenya()) {
-        return true;
+        usuarioCorrecto = true;
+        usuario = element;
+        console.log(usuario);
         mostrarOfertas(element.getNombre());
-      } else {
-        alert("Error de login")
-        return false;
       }
-    } else {
-      alert("Error de login")
-      return false;
     }
   });
+  if (usuarioCorrecto == false) {
+    alert("Error de login")
+  }
 }
 
 
@@ -88,20 +91,24 @@ function iniciarSesion() {
 function mostrarOfertas(nombre) {
   let mensajeUsuario = document.querySelector("#titulo_cliente");
   mensajeUsuario.innerHTML = "Bienvenido/a " + nombre;
+  if (usuario.getTipo() == 1) {
+    console.log("usuario club")
+    miNodoPrecio.style.textDecoration = "line-through";
+    miNodoPrecioDescuento.textContent = `${Math.round(info.precio * 0.85)}${divisa}`;
+  } else {
+    console.log("usuario premium")
+    miNodoPrecio.style.textDecoration = "line-through";
+    miNodoPrecioDescuento.textContent = `${Math.round(info.precio * 0.75)}${divisa}`;
+    console.log(miNodoPrecioDescuento);
+  }
 }
-
-
-
-
-
-
-
 
 //Carrito
 /**
  * Dibuja todos los productos a partir de la base de datos. No confundir con el carrito
  */
 function renderizarProductos() {
+  let i = 0;
   baseDeDatos.forEach((info) => {
     // Estructura
     const miNodo = document.createElement("div");
@@ -118,9 +125,14 @@ function renderizarProductos() {
     miNodoImagen.classList.add("img-fluid");
     miNodoImagen.setAttribute("src", info.imagen);
     // Precio
+    const miNodoPrecioDescuento = document.createElement("p");
+    miNodoPrecio.classList.add("card-text");
+    miNodoPrecioDescuento.style.display = "none";
+    miNodoPrecioDescuento.id = "nodoDescuento " + i++;
     const miNodoPrecio = document.createElement("p");
     miNodoPrecio.classList.add("card-text");
     miNodoPrecio.textContent = `${info.precio}${divisa}`;
+    miNodoPrecio.id = "nodoPrecio"
     // Boton
     const miNodoBoton = document.createElement("button");
     miNodoBoton.classList.add("btn", "btn-primary");
@@ -131,6 +143,7 @@ function renderizarProductos() {
     miNodoCardBody.appendChild(miNodoImagen);
     miNodoCardBody.appendChild(miNodoTitle);
     miNodoCardBody.appendChild(miNodoPrecio);
+    miNodoCardBody.appendChild(miNodoPrecioDescuento);
     miNodoCardBody.appendChild(miNodoBoton);
     miNodo.appendChild(miNodoCardBody);
     DOMitems.appendChild(miNodo);
@@ -239,6 +252,7 @@ let user1 = new Usuario("1", "nicolasrp", "Nicolas Rosende Perez", "698154142", 
 let user2 = new Usuario("2", "danielaft", "Daniela Franco Turchi", "123456789", "1", "abc123.");
 let usuarios = [user1, user2];
 let carrito = [];
+let usuario = null;
 const divisa = "€";
 const DOMitems = document.querySelector("#items");
 const DOMcarrito = document.querySelector("#carrito");
