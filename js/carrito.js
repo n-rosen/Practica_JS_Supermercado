@@ -67,39 +67,62 @@ function iniciarSesion() {
   let contrasenya = document.querySelector("#contraseña").value;
   let usuarioCorrecto = false;
   if (username == "" || contrasenya == "") {
-    alert("Introduce el nombre de usuario y la contraseña");
-  }
-  usuarios.forEach(element => {
-    console.log(element.getUsername());
-    if (username == element.getUsername()) {
-      if (contrasenya == element.getContrasenya()) {
-        usuarioCorrecto = true;
-        usuario = element;
-        console.log(usuario);
-        mostrarOfertas(element.getNombre());
+    console.error("Introduce el nombre de usuario y la contraseña");
+  } else {
+    usuarios.forEach((element) => {
+      console.log(element.getUsername());
+      if (username == element.getUsername()) {
+        if (contrasenya == element.getContrasenya()) {
+          usuarioCorrecto = true;
+          usuario = element;
+          console.log(usuario);
+          ocultarDivUsuario();
+          mostrarOfertas();
+        }
       }
-    }
-  });
+    });
+  }
   if (usuarioCorrecto == false) {
-    alert("Error de login")
+    alert("Error de login");
   }
 }
+function ocultarDivUsuario() {
+  let formusuario = document.querySelector("#formUsuario");
+  formusuario.style.display = "none";
+  let divUsuario = document.querySelector("#divUsuario");
+  let divnombre = document.createElement("div");
+  let h4Nombre = document.createElement("h4");
+  h4Nombre.innerHTML = usuario.getUsername();
+  h4Nombre.style.color = "#ff0"
+  divnombre.appendChild(h4Nombre);
+  console.log(divnombre);
+  divUsuario.appendChild(divnombre);
+}
 
-
-
-
-function mostrarOfertas(nombre) {
+function mostrarOfertas() {
   let mensajeUsuario = document.querySelector("#titulo_cliente");
-  mensajeUsuario.innerHTML = "Bienvenido/a " + nombre;
-  if (usuario.getTipo() == 1) {
-    console.log("usuario club")
+  mensajeUsuario.innerHTML = "Bienvenido/a " + usuario.getNombre();
+
+  for (let index = 0; index < 4; index++) {
+    let miNodoPrecio = document.querySelector("#nodoPrecio" + index);
     miNodoPrecio.style.textDecoration = "line-through";
-    miNodoPrecioDescuento.textContent = `${Math.round(info.precio * 0.85)}${divisa}`;
-  } else {
-    console.log("usuario premium")
-    miNodoPrecio.style.textDecoration = "line-through";
-    miNodoPrecioDescuento.textContent = `${Math.round(info.precio * 0.75)}${divisa}`;
-    console.log(miNodoPrecioDescuento);
+    let precio = miNodoPrecio.innerHTML;
+    precio = precio.substring(0, precio.length - 1);
+    console.log(precio);
+    let miNodoPrecioDescuento = document.querySelector(
+      "#nodoDescuento" + index
+    );
+    if (usuario.getTipo == 1) {
+      miNodoPrecioDescuento.textContent = `${Math.round(
+        parseFloat(precio) * 0.85
+      )}${divisa}`;
+    } else {
+      miNodoPrecioDescuento.textContent = `${Math.round(
+        parseFloat(precio) * 0.75
+      )}${divisa}`;
+    }
+
+    miNodoPrecioDescuento.style.display = "block";
   }
 }
 
@@ -126,13 +149,14 @@ function renderizarProductos() {
     miNodoImagen.setAttribute("src", info.imagen);
     // Precio
     const miNodoPrecioDescuento = document.createElement("p");
-    miNodoPrecio.classList.add("card-text");
+    miNodoPrecioDescuento.classList.add("card-text");
     miNodoPrecioDescuento.style.display = "none";
-    miNodoPrecioDescuento.id = "nodoDescuento " + i++;
+    miNodoPrecioDescuento.id = "nodoDescuento" + i;
+    console.log(miNodoPrecioDescuento);
     const miNodoPrecio = document.createElement("p");
     miNodoPrecio.classList.add("card-text");
     miNodoPrecio.textContent = `${info.precio}${divisa}`;
-    miNodoPrecio.id = "nodoPrecio"
+    miNodoPrecio.id = "nodoPrecio" + i++;
     // Boton
     const miNodoBoton = document.createElement("button");
     miNodoBoton.classList.add("btn", "btn-primary");
@@ -235,7 +259,9 @@ function calcularTotal() {
  */
 function vaciarCarrito() {
   if (carrito.length > 0) {
-    let confirmar_carrito = confirm("Estás seguro de que quieres vaciar el carrito ????");
+    let confirmar_carrito = confirm(
+      "Estás seguro de que quieres vaciar el carrito ????"
+    );
     if (confirmar_carrito) {
       // Limpiamos los productos guardados
       carrito = [];
@@ -248,8 +274,22 @@ function vaciarCarrito() {
 }
 
 // Eventos
-let user1 = new Usuario("1", "nicolasrp", "Nicolas Rosende Perez", "698154142", "2", "abc123.");
-let user2 = new Usuario("2", "danielaft", "Daniela Franco Turchi", "123456789", "1", "abc123.");
+let user1 = new Usuario(
+  "1",
+  "nicolasrp",
+  "Nicolas Rosende Perez",
+  "698154142",
+  "2",
+  "abc123."
+);
+let user2 = new Usuario(
+  "2",
+  "danielaft",
+  "Daniela Franco Turchi",
+  "123456789",
+  "1",
+  "abc123."
+);
 let usuarios = [user1, user2];
 let carrito = [];
 let usuario = null;

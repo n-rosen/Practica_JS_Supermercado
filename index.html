@@ -41,16 +41,15 @@
                 <button type="button" class="btn btn-light">Buscar</button>
             </div>
             <div class="div_cuenta">
-                <div>
-                    <form>
+                <div id="divUsuario">
+                    <form id="formUsuario">
                         <label for="nombreusuario" class="form-label text-light">Iniciar Sesión:</label>
-                        <br>
                         <input type="text" id="nombreusuario" placeholder="Nombre usuario" required>
                         <input type="password" id="contraseña" placeholder="Contraseña" required>
                         <button type="button" id="login" class="btn btn-light">Iniciar Sesion</button>
                     </form>
-                    <button type="button" id="registrarse" class="btn btn-light">Registrarse</button>
                 </div>
+
             </div>
         </div>
     </header>
@@ -59,8 +58,9 @@
             <ul id="menu_navegacion">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="#shopify-section-49d01bc5-9987-4d15-a5b1-ed1d0a048049">Informacion</a></li>
-                <!-- <li><a href="login.html">Iniciar Sesion / Registrarse</a></li> -->
                 <li><a href="#titulo_cliente">Ofertas</a></li>
+                <li><a href="login.html">Registrarse</a></li>
+
             </ul>
         </nav>
     </div>
@@ -96,7 +96,7 @@
         </section>
     </div>
     <div class="text-center">
-        <h1 id="titulo_cliente">Inicia sesión o registrate para obtener ofertas</h1>
+        <h1 id="titulo_cliente">Inicia sesión o <a href="login.html">Registrate</a> para obtener ofertas</h1>
     </div>
     <div class="container">
         <div class="row">
