@@ -59,7 +59,7 @@
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="#shopify-section-49d01bc5-9987-4d15-a5b1-ed1d0a048049">Informacion</a></li>
                 <li><a href="#titulo_cliente">Ofertas</a></li>
-                <li><a href="login.html">Registrarse</a></li>
+                <li><a href="#div_registro" id="mostrarRegistro">Registrarse</a></li>
 
             </ul>
         </nav>
@@ -111,8 +111,122 @@
                 <!-- Precio total -->
                 <p class="text-right">Total: <span id="total"></span>&euro;</p>
                 <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+                <button id="boton-confirmar" class="btn btn--addToCart">Comprar</button>
             </aside>
         </div>
+    </div>
+    <div id="div_registro">
+        <section class="vh-100 gradient-custom">
+            <div class="container py-5 h-100">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-12 col-lg-9 col-xl-7">
+                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                            <div class="card-body p-4 p-md-5">
+                                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registro</h3>
+                                <form>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="text" id="firstName" class="form-control form-control-lg"
+                                                    required />
+                                                <label class="form-label" for="firstName">Nombre</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <div class="form-outline">
+                                                <input type="text" id="userName" class="form-control form-control-lg"
+                                                    required />
+                                                <label class="form-label" for="userName">Nombre de Usuario</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                            <div class="form-outline datepicker w-100">
+                                                <input type="date" class="form-control form-control-lg"
+                                                    id="birthdayDate" />
+                                                <label for="birthdayDate" class="form-label">Fecha nacimiento</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+
+                                            <h6 class="mb-2 pb-1">Sexo: </h6>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                    id="femaleGender" value="option1" checked />
+                                                <label class="form-check-label" for="femaleGender">Mujer</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                    id="maleGender" value="option2" />
+                                                <label class="form-check-label" for="maleGender">Hombre</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                    id="otherGender" value="option3" />
+                                                <label class="form-check-label" for="otherGender">Otro</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4 pb-2">
+
+                                            <div class="form-outline">
+                                                <input type="password" id="password"
+                                                    class="form-control form-control-lg" required />
+                                                <label class="form-label" for="password">Contraseña</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4 pb-2">
+
+                                            <div class="form-outline">
+                                                <input type="tel" id="phoneNumber" class="form-control form-control-lg"
+                                                    required />
+                                                <label class="form-label" for="phoneNumber">Nº Telefono</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <select class="select form-control-lg" id="tipoUsuario" required>
+                                                <option value="1" disabled>Elige el tipo de suscripción</option>
+                                                <option value="2">Usuario Club</option>
+                                                <option value="3">Usuario Premium</option>
+                                            </select>
+                                            <label class="form-label select-label">Elige una opción</label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 pt-2">
+                                        <input class="btn btn-primary btn-lg" type="submit" value="Enviar"
+                                            id="enviarRegistro" />
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     <footer>
         <figure>
@@ -120,7 +234,7 @@
             All Rights Reserved.
         </figure>
     </footer>
-    <script src="js/carrito.js"></script>
+    <script src="js/index.js"></script>
     <script src=""></script>
 </body>
 

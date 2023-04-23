@@ -60,6 +60,81 @@ class Usuario {
   }
 }
 // Funciones
+//Comprar
+function carritoComprar() {
+  if (carrito.length > 0) {
+    var opciones = "left=1000,top=1000,width=500,height=350",
+      i = 0;
+    var articulos = document.querySelector("#carrito");
+    var total = document.querySelector("#total").innerHTML;
+    ventana = window.open("", "ventana", opciones);
+    ventana.name = "nueva";
+    ventana.document.write(
+      '<head><meta http-equiv="content-type" content="text/html; charset=iso-8859-1"><title>Titulo nueva ventana</title>'
+    );
+    ventana.document.write('<body id="cuerpo">');
+    ventana.document.write('<div id="capa">');
+
+    if (usuario != null) {
+      console.log(articulos);
+      ventana.document.write("<h1>" + usuario.getNombre() + "</h1>");
+      ventana.document.write(
+        "<h1>" +
+          "TOTAL: " +
+          total +
+          "€" +
+          "</h1>" +
+          '<input type="button" name="BotonCerrar" id="botonCerrar" value="Cerrar">'
+      );
+    } else {
+      console.log(articulos);
+      ventana.document.write(
+        "<h1>" +
+          "TOTAL: " +
+          total +
+          "€" +
+          "</h1>" +
+          "<br>" +
+          '<input type="button" name="BotonCerrar" id="botonCerrar" value="Cerrar">'
+      );
+    }
+    ventana.document.write("</div>");
+    ventana.document.write("</body>");
+    //Poner a la escucha del evento clic el botón Cerrar de la nueva ventana
+    console.log(ventana.name);
+    var botonCerrarVentana = ventana.document.getElementById("botonCerrar");
+    console.log(botonCerrarVentana.name);
+    botonCerrarVentana.addEventListener("click", cerrarNuevaVentana);
+  }
+}
+function cerrarNuevaVentana() {
+  ventana.close();
+}
+//Registro
+function registro() {
+  let nombre = document.querySelector("#firstName").value;
+  let nombreUsuario = document.querySelector("#userName").value;
+  let contrasenya = document.querySelector("#password").value;
+  let telefono = document.querySelector("#phoneNumber").value;
+  let tipoUsuario = document.querySelector("#tipoUsuario");
+  let tipoUsuario_value = tipoUsuario.options[tipoUsuario.selectedIndex].value;
+  let usuarioRegistrar = new Usuario(
+    usuarios.length + 1,
+    nombreUsuario,
+    nombre,
+    telefono,
+    tipoUsuario_value,
+    contrasenya
+  );
+  usuarios.push(usuarioRegistrar);
+  guardarUsuarios();
+}
+
+function guardarUsuarios() {
+  usuarios.forEach((usuario) => {
+    localStorage.setItem("usuario", JSON.stringify(usuario));
+  });
+}
 //Iniciar sesion
 
 function iniciarSesion() {
@@ -93,7 +168,8 @@ function ocultarDivUsuario() {
   let divnombre = document.createElement("div");
   let h4Nombre = document.createElement("h4");
   h4Nombre.innerHTML = usuario.getUsername();
-  h4Nombre.style.color = "#ff0"
+  h4Nombre.style.color = "#ff0";
+  h4Nombre.style.marginTop = "25px";
   divnombre.appendChild(h4Nombre);
   console.log(divnombre);
   divUsuario.appendChild(divnombre);
@@ -112,7 +188,7 @@ function mostrarOfertas() {
     let miNodoPrecioDescuento = document.querySelector(
       "#nodoDescuento" + index
     );
-    if (usuario.getTipo == 1) {
+    if (usuario.getTipo() == 1) {
       miNodoPrecioDescuento.textContent = `${Math.round(
         parseFloat(precio) * 0.85
       )}${divisa}`;
@@ -124,6 +200,8 @@ function mostrarOfertas() {
 
     miNodoPrecioDescuento.style.display = "block";
   }
+  carrito = [];
+  renderizarCarrito();
 }
 
 //Carrito
@@ -204,10 +282,26 @@ function renderizarCarrito() {
       // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
       return itemId === item ? (total += 1) : total;
     }, 0);
+    console.log;
     // Creamos el nodo del item del carrito
     const miNodo = document.createElement("li");
     miNodo.classList.add("list-group-item", "text-right", "mx-2");
-    miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - ${miItem[0].precio}${divisa}`;
+    if (usuario != null) {
+      if (usuario.getTipo() == 1) {
+        console.log(usuario);
+        miNodo.textContent = `${numeroUnidadesItem} x ${
+          miItem[0].nombre
+        } - ${Math.round(miItem[0].precio * 0.85)}${divisa}`;
+      } else if (usuario.getTipo() == 2) {
+        console.log(usuario);
+        miNodo.textContent = `${numeroUnidadesItem} x ${
+          miItem[0].nombre
+        } - ${Math.round(miItem[0].precio * 0.75)}${divisa}`;
+      }
+    } else {
+      miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - ${miItem[0].precio}${divisa}`;
+    }
+
     // Boton de borrar
     const miBoton = document.createElement("button");
     miBoton.classList.add("btn", "btn-danger", "mx-5");
@@ -249,7 +343,17 @@ function calcularTotal() {
         return itemBaseDatos.id === parseInt(item);
       });
       // Los sumamos al total
-      return total + miItem[0].precio;
+      if (usuario != null) {
+        if (usuario.getTipo() == 1) {
+          console.log(usuario);
+          return total + Math.round(miItem[0].precio * 0.85);
+        } else if (usuario.getTipo() == 2) {
+          console.log(usuario);
+          return total + Math.round(miItem[0].precio * 0.75);
+        }
+      } else {
+        return total + miItem[0].precio;
+      }
     }, 0)
     .toFixed(2);
 }
@@ -291,6 +395,22 @@ let user2 = new Usuario(
   "abc123."
 );
 let usuarios = [user1, user2];
+for (let index = 0; index < localStorage.length; index++) {
+  let usuario = localStorage.getItem(localStorage.key(index));
+  console.log(JSON.parse(usuario).contrasenya);
+  usuario = JSON.parse(usuario);
+  usuario = new Usuario(
+    usuario.id,
+    usuario.username,
+    usuario.nombre,
+    usuario.telefono,
+    usuario.tipo,
+    usuario.contrasenya
+  );
+  usuarios.push(usuario);
+  console.log(usuarios);
+}
+var ventana;
 let carrito = [];
 let usuario = null;
 const divisa = "€";
@@ -299,9 +419,19 @@ const DOMcarrito = document.querySelector("#carrito");
 const DOMtotal = document.querySelector("#total");
 const DOMbotonVaciar = document.querySelector("#boton-vaciar");
 const DOMbotonlogin = document.querySelector("#login");
+const DOMbotonRegistro = document.querySelector("#enviarRegistro");
+const DOMdivRegistro = document.querySelector("#div_registro");
+const DOMaMostrarRegistro = document.querySelector("#mostrarRegistro");
+const DOMbotonComprar = document.querySelector("#boton-confirmar");
+DOMdivRegistro.style.display = "none";
 console.log(DOMbotonVaciar);
 DOMbotonVaciar.addEventListener("click", vaciarCarrito);
 DOMbotonlogin.addEventListener("click", iniciarSesion);
+DOMbotonComprar.addEventListener("click", carritoComprar);
+DOMaMostrarRegistro.addEventListener("click", function () {
+  DOMdivRegistro.style.display = "block";
+});
+DOMbotonRegistro.addEventListener("click", registro);
 // Inicio
 renderizarProductos();
 renderizarCarrito();
